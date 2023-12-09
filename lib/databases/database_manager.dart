@@ -46,7 +46,7 @@ class DatabaseManager {
 
   Future<void> removeWord({required Word word}) async {
     final db = await initDatabase();
-    await db.delete(_table, where: 'english = ?', whereArgs: [word.english]);
+    await db.delete(_table, where: 'english = ?', whereArgs: [word.chapter]);
 
   }
 

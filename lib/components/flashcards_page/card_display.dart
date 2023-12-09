@@ -47,27 +47,27 @@ class CardDisplay extends StatelessWidget {
                             : const SizedBox(),
                         TTSButton(word: notifier.word1),
                       ] else ...[
-                        buildImage(notifier.word1.english),
-                        buildTextBox(notifier.word1.english, context, 1),
+                        buildImage(notifier.word1.chapter),
+                        buildTextBox(notifier.word1.chapter, context, 1),
                       ]
                     ],
                   )
                 : Column(
                     children: [
                       if (audioOnly) ...[
-                        buildImage(notifier.word2.english),
-                        buildTextBox(notifier.word2.english, context, 2),
+                        buildImage(notifier.word2.chapter),
+                        buildTextBox(notifier.word2.chapter, context, 2),
                         buildTextBox(notifier.word2.character, context, 2),
                         showPinyin
                             ? buildTextBox(notifier.word2.pinyin, context, 1)
                             : const SizedBox(),
                         TTSButton(word: notifier.word1),
                       ] else if (!setEnglishFirst) ...[
-                        buildImage(notifier.word2.english),
-                        buildTextBox(notifier.word2.english, context, 2),
+                        buildImage(notifier.word2.chapter),
+                        buildTextBox(notifier.word2.chapter, context, 2),
                         TTSButton(word: notifier.word1),
                       ] else ...[
-                        buildImage(notifier.word2.english),
+                        buildImage(notifier.word2.chapter),
                         buildTextBox(notifier.word2.character, context, 2),
                         showPinyin
                             ? buildTextBox(notifier.word2.pinyin, context, 1)

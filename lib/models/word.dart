@@ -1,20 +1,20 @@
 class Word {
   int? id;
   final String topic;
-  final String english;
+  final String chapter;
   final String character;
   final String pinyin;
 
   Word(
       {required this.topic,
-      required this.english,
-      required this.character,
-      required this.pinyin});
+      required this.chapter,//subject
+      required this.character,//question
+      required this.pinyin});//answer
 
   Map<String, dynamic> toMap() {
     return {
       'topic': topic,
-      'english': english,
+      'chapter': chapter,
       'character': character,
       'pinyin': pinyin
     };
@@ -23,7 +23,7 @@ class Word {
   factory Word.fromMap({required Map<String, dynamic> map}) {
     return Word(
         topic: map['topic'],
-        english: map['english'],
+        chapter: map['chapter'],
         character: map['character'],
         pinyin: map['pinyin']);
   }
