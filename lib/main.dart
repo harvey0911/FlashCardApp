@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart' show BuildContext, Key, MaterialApp, StatelessWidget, Widget, runApp;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_flashcards/Authentication/main_screens/LoginPage.dart';
+import 'package:flutter_flashcards/Authentication/main_screens/RegisterPage.dart';
 import 'package:flutter_flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flutter_flashcards/notifiers/review_notifier.dart';
 import 'package:flutter_flashcards/notifiers/settings_notifier.dart';
@@ -8,13 +10,20 @@ import 'package:flutter_flashcards/utils/methods.dart';
 import 'package:provider/provider.dart';
 
 import 'configs/themes.dart';
+import 'Authentication/results_screen/Done.dart';
+import 'Authentication/results_screen/ForgotPassword.dart';
 
-void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (_) => FlashcardsNotifier()),
-    ChangeNotifierProvider(create: (_) => SettingsNotifier()),
-    ChangeNotifierProvider(create: (_) => ReviewNotifier()),
-  ], child: const MyApp()));
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => FlashcardsNotifier()),
+      ChangeNotifierProvider(create: (_) => SettingsNotifier()),
+      ChangeNotifierProvider(create: (_) => ReviewNotifier()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -27,25 +36,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MyFlashcardsApp',
       theme: appTheme,
-      home: const HomePage(),
+      initialRoute: RegisterPage.id,
+      routes: {
+        RegisterPage.id: (context) => RegisterPage(),
+        LoginPage.id: (context) => LoginPage(),
+        HomePage.id: (context) => const HomePage(), // Assuming HomePage has a static 'id' field
+        ForgotPassword.id: (context) => ForgotPassword(),
+        Done.id: (context) => Done(),
+        // Removed GoogleDone from routes due to parameter requirements
+      },
     );
   }
 }
-
-//class Home extends StatelessWidget {
-  //@override
-  //Widget build(BuildContext context) {
-    //return MaterialApp(
-      //debugShowCheckedModeBanner: false,
-      //theme: ThemeData(fontFamily: 'Abel'),
-      //initialRoute: RegisterPage.id,
-      //routes: {
-        //RegisterPage.id: (context) => RegisterPage(),
-        //LoginPage.id: (context) => LoginPage(),
-        //ForgotPassword.id: (context) => ForgotPassword(),
-        //Done.id: (context) => Done(),
-      //},
-    //);
-  //}
-
-

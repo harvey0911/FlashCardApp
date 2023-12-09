@@ -12,6 +12,7 @@ import '../components/home_page/topic_tile.dart';
 import '../data/words.dart';
 
 class HomePage extends StatefulWidget {
+  static const String id = '/HomePage';
   const HomePage({Key? key}) : super(key: key);
 
   @override

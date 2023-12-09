@@ -2,18 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-// ignore: must_be_immutable
 class GoogleDone extends StatelessWidget {
-  GoogleSignIn _googleSignIn;
-  User _user;
-
-  GoogleDone(User user, GoogleSignIn signIn) {
-    _user = user;
-    _googleSignIn = signIn;
-
-    print(_user);
-    print(_googleSignIn);
-  }
+  final GoogleSignIn _googleSignIn;
+  final User _user;
+  static const String id = 'google_done';
+  // Constructor with required parameters
+  GoogleDone({required User user, required GoogleSignIn signIn})
+      : _user = user,
+        _googleSignIn = signIn;
 
   @override
   Widget build(BuildContext context) {
@@ -23,28 +19,33 @@ class GoogleDone extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipOval(
-              child: _user.photoUrl != null
+              child: _user.photoURL != null
                   ? Image.network(
-                      _user.photoUrl,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    )
+                _user.photoURL!,
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              )
                   : Image.network(
-                      'https://lh3.googleusercontent.com/6UgEjh8Xuts4nwdWzTnWH8QtLuHqRMUB7dp24JYVE2xcYzq4HA8hFfcAbU-R-PC_9uA1',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
+                'https://example.com/default_user_image.png', // Placeholder image URL
+                width: 100,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
             ),
-            Text(_user.displayName,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25)),
-            FlatButton(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              onPressed: () {
-                _googleSignIn.signOut();
+            Text(
+              _user.displayName ?? 'Anonymous',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+            ),
+            ElevatedButton( // Replaced FlatButton with ElevatedButton
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              onPressed: () async {
+                await _googleSignIn.signOut();
                 Navigator.pop(context);
               },
               child: Text('Google sign in Done!'),

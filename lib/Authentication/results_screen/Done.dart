@@ -1,37 +1,35 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-User loggedInUser;
-
-// ignore: must_be_immutable
+// Using a StatefulWidget to manage state
 class Done extends StatefulWidget {
-  static String id = '/Done';
+  static const String id = 'done_screen'; // Changed to const for best practice
 
   @override
   _DoneState createState() => _DoneState();
 }
 
 class _DoneState extends State<Done> {
-  final _auth = FirebaseAuth.instance;
-
-  void getCurrentUser() async {
-    try {
-      //TODO 10 : New user variable to check if a newUser is signed in
-      final user = await _auth.currentUser();
-      //Equal to null if no user is signed in, else equal to new user details
-      //TODO 11 : Use if else block to get the loggedInUser details
-      if (user != null) {
-        loggedInUser = user;
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? loggedInUser; // Nullable type for loggedInUser
 
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser; // Directly getting the current user
+      if (user != null) {
+        setState(() {
+          loggedInUser = user; // Assigning user to loggedInUser if not null
+        });
+      }
+    } catch (e) {
+      print(e); // Error handling
+    }
   }
 
   @override
@@ -51,13 +49,13 @@ class _DoneState extends State<Done> {
               stops: [0.5, 1],
               colors: [
                 Colors.black.withOpacity(.9),
-                Colors.black.withOpacity(.2)
+                Colors.black.withOpacity(.2),
               ],
             ),
           ),
           child: Center(
             child: Text(
-              'Welcome User!',
+              'Welcome ${loggedInUser?.email ?? "User"}!', // Displaying the user's email if available
               style: TextStyle(fontSize: 50.0, color: Colors.white),
             ),
           ),

@@ -7,18 +7,17 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:validators/validators.dart' as validator;
 
-// ignore: must_be_immutable
 class RegisterPage extends StatefulWidget {
-  static String id = '/RegisterPage';
+  static const String id = 'register_page'; // Changed to const for best practice
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String name;
-  String email;
-  String password;
+  String? name; // Nullable types for form fields
+  String? email;
+  String? password;
 
   bool _showSpinner = false;
 
@@ -29,37 +28,30 @@ class _RegisterPageState extends State<RegisterPage> {
   String _passwordText = 'Please use a strong password';
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<User> _handleSignIn() async {
-    // hold the instance of the authenticated user
-    User user;
-    // flag to check whether we're signed in already
+  Future<User?> _handleSignIn() async { // Return type changed to User?
     bool isSignedIn = await _googleSignIn.isSignedIn();
     if (isSignedIn) {
-      // if so, return the current user
-      user = await _auth.currentUser();
+      return _auth.currentUser; // Directly return current user
     } else {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      // get the credentials to (access / id token)
-      // to sign in via Firebase Authentication
-      final AuthCredential credential = GoogleAuthProvider.getCredential(
-          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-      user = (await _auth.signInWithCredential(credential)).user;
-    }
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+      if (googleAuth == null) return null; // Handle null case
 
-    return user;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken
+      );
+      return (await _auth.signInWithCredential(credential)).user;
+    }
   }
 
   void onGoogleSignIn(BuildContext context) async {
-    User user = await _handleSignIn();
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => GoogleDone(user, _googleSignIn)));
+    User? user = await _handleSignIn();
+    if (user != null) { // Check for null
+      Navigator.pushNamed(context, GoogleDone.id, arguments: user);
+    }
   }
 
   @override
@@ -138,49 +130,38 @@ class _RegisterPageState extends State<RegisterPage> {
                       SizedBox(height: 10.0),
                     ],
                   ),
-                  RaisedButton(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    color: Color(0xff447def),
+                  ElevatedButton( // Replaced RaisedButton with ElevatedButton
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xff447def), // Button color
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                    ),
                     onPressed: () async {
                       setState(() {
                         _wrongEmail = false;
                         _wrongPassword = false;
                       });
                       try {
-                        if (validator.isEmail(email) &
-                            validator.isLength(password, 6)) {
-                          setState(() {
-                            _showSpinner = true;
-                          });
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                            email: email,
-                            password: password,
+                        if (validator.isEmail(email ?? '') && validator.isLength(password ?? '', 6)) {
+                          setState(() => _showSpinner = true);
+                          final newUser = await _auth.createUserWithEmailAndPassword(
+                              email: email!, password: password!
                           );
                           if (newUser != null) {
-                            print('user authenticated by registration');
                             Navigator.pushNamed(context, Done.id);
                           }
+                        } else {
+                          setState(() {
+                            _wrongEmail = !validator.isEmail(email ?? '');
+                            _wrongPassword = !validator.isLength(password ?? '', 6);
+                          });
                         }
-
-                        setState(() {
-                          if (!validator.isEmail(email)) {
-                            _wrongEmail = true;
-                          } else if (!validator.isLength(password, 6)) {
-                            _wrongPassword = true;
-                          } else {
-                            _wrongEmail = true;
-                            _wrongPassword = true;
-                          }
-                        });
                       } catch (e) {
-                        setState(() {
-                          _wrongEmail = true;
-                          if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
-                            _emailText =
-                                'The email address is already in use by another account';
-                          }
-                        });
+                        if (e is FirebaseAuthException && e.code == 'email-already-in-use') {
+                          setState(() {
+                            _wrongEmail = true;
+                            _emailText = 'The email address is already in use by another account';
+                          });
+                        }
                       }
                     },
                     child: Text(
@@ -216,12 +197,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: RaisedButton(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          color: Colors.white,
-                          shape: ContinuousRectangleBorder(
-                            side:
-                                BorderSide(width: 0.5, color: Colors.grey[400]),
+                        child: ElevatedButton( // ElevatedButton for Google Sign-In
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white, // Button color
+                            shape: ContinuousRectangleBorder(
+                              side: BorderSide(width: 0.5, color: Colors.grey),
+                            ),
                           ),
                           onPressed: () {
                             onGoogleSignIn(context);
@@ -244,12 +225,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       SizedBox(width: 20.0),
                       Expanded(
-                        child: RaisedButton(
-                          padding: EdgeInsets.symmetric(vertical: 5.0),
-                          color: Colors.white,
-                          shape: ContinuousRectangleBorder(
-                            side:
-                                BorderSide(width: 0.5, color: Colors.grey[400]),
+                        child: ElevatedButton( // Placeholder for Facebook Sign-In
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white, // Button color
+                            shape: ContinuousRectangleBorder(
+                              side: BorderSide(width: 0.5, color: Colors.grey),
+                            ),
                           ),
                           onPressed: () {
                             //TODO: Implement facebook functionality
