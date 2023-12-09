@@ -4,7 +4,16 @@ import '../models/word.dart';
 
 final List<Word> words = [
 
-  Word(topic: "Computer",chapter: "Computer", pinyin: "Yóu Yǒng Yī", character: "游泳衣"),
+
+
+  Word (topic: "Software",chapter: "Chapter",pinyin: "QUESTION",character: "lol"),
+
+
+
+
+
+
+  Word(topic: "Beach",chapter: "Computer", pinyin: "Yóu Yǒng Yī", character: "游泳衣"),
   Word(topic: "Beach", chapter: "Seashell", pinyin: "Bèi Ké", character: "贝壳"),
   Word(topic: "Beach", chapter: "Sunscreen", pinyin: "Fáng Shài Shuāng", character: "防晒霜"),
   Word(topic: "Beach", chapter: "Surfboard", pinyin: "Chōng Làng Bǎn", character: "冲浪板"),

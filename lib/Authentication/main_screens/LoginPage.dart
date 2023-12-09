@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lib/Authentication/results_screen/ForgotPassword.dart';
-import 'package:lib/Authentication/results_screen/GoogleDone.dart';
-import 'package:lib/Authentication/main_screens/RegisterPage.dart';
+
+import '../../Authentication/results_screen/ForgotPassword.dart';
+import '../../Authentication/results_screen/GoogleDone.dart';
+import '../../Authentication/main_screens/RegisterPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../results_screen/Done.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
