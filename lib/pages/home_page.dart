@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       _topics.sort();
     }
 
-    _topics.insertAll(0, ['Random 5', 'Random 20', 'Test All']);
+    _topics.insertAll(0, ['CSC1401', 'CSC3324', 'MTH1401']);
 
     super.initState();
   }
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
             ),
             const FadeInAnimation(
                 child: Text(
-              'Chinese Flashcards\n中文学习卡',
+              'MyFlashcardsApp',
               textAlign: TextAlign.center,
             )),
             Column(
@@ -105,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                 background: Padding(
                   padding: EdgeInsets.all(size.width * 0.10),
                   child: FadeInAnimation(
-                      child: Image.asset('assets/images/Dragon.png')),
+                      child: Image.asset('assets/images/MyFlashcards.png')),
                 ),
               ),
             ),

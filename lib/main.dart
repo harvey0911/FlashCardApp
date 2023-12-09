@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show BuildContext, Key, MaterialApp, StatelessWidget, Widget, runApp;
 import 'package:flutter_flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flutter_flashcards/notifiers/review_notifier.dart';
 import 'package:flutter_flashcards/notifiers/settings_notifier.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     updatePreferencesOnRestart(context: context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Chinese Flashcards',
+      title: 'MyFlashcardsApp',
       theme: appTheme,
       home: const HomePage(),
     );

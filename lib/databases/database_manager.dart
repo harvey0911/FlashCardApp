@@ -18,7 +18,6 @@ class DatabaseManager {
       _table = 'words',
       _column1 = 'topic',
       _column2 = 'english',
-      _column3 = 'character',
       _column4 = 'pinyin';
 
   Future<Database> initDatabase() async {
@@ -26,7 +25,7 @@ class DatabaseManager {
     final path = join(devicesPath, _database);
 
     return await openDatabase(path, onCreate: (db, version){
-      db.execute('CREATE TABLE $_table($_column1 TEXT, $_column2 TEXT PRIMARY KEY, $_column3 TEXT, $_column4 TEXT)');
+      db.execute('CREATE TABLE $_table($_column1 TEXT, $_column2 TEXT PRIMARY KEY, $_column4 TEXT)');
     }, version: 1);
 
   }
