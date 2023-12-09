@@ -35,9 +35,9 @@ class FlashcardsNotifier extends ChangeNotifier {
 
   String topic = "";
   Word word1 =
-      Word(topic: "", english: "Loading Arrow", character: "", pinyin: "");
+      Word(topic: "", chapter: "Loading Arrow", character: "", pinyin: "");
   Word word2 =
-      Word(topic: "", english: "Loading Arrow", character: "", pinyin: "");
+      Word(topic: "", chapter: "Loading Arrow", character: "", pinyin: "");
   List<Word> selectedWords = [];
 
   bool isFirstRound = true,

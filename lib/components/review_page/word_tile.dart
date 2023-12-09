@@ -47,13 +47,13 @@ class WordTile extends StatelessWidget {
                       width: 50,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Image.asset('assets/images/${word.english}.png'),
+                        child: Image.asset('assets/images/${word.chapter}.png'),
                       ))
                   : const SizedBox(),
               title: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  notifier.showEnglish ? Text(word.english) : const SizedBox(),
+                  notifier.showEnglish ? Text(word.chapter) : const SizedBox(),
                   notifier.showCharacter
                       ? Text(word.character)
                       : const SizedBox(),

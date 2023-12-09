@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-const Color kRed = Color.fromARGB(255, 215, 0, 0);
-const Color kYellow = Color.fromARGB(255, 255, 165, 30);
+const Color kRed = Color.fromARGB(255, 0, 0, 255);
+const Color kYellow =Color.fromARGB(255, 255, 255, 255);
+
 
 const double kIconPadding = 0.06;
 

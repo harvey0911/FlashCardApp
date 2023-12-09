@@ -88,7 +88,7 @@ class _ReviewPageState extends State<ReviewPage> {
                   if (snapshot.hasData) {
                     var sortList = snapshot.data as List<Word>;
 
-                    sortList.sort((a, b) => a.english.compareTo(b.english));
+                    sortList.sort((a, b) => a.chapter.compareTo(b.chapter));
 
                     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                       _insertWords(words: sortList);

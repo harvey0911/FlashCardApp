@@ -30,7 +30,7 @@ class _HomePageState extends State<HomePage> {
       _topics.sort();
     }
 
-    _topics.insertAll(0, ['CSC1401', 'CSC3324', 'MTH1401']);
+    _topics.insertAll(0, []);
 
     super.initState();
   }
