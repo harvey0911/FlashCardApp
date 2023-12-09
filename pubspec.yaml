@@ -46,6 +46,8 @@ dependencies:
   cloud_firestore: ^4.13.5
   google_sign_in: ^6.2.0
   validators: 3.0.0
+  modal_progress_hud_nsn: ^0.4.0
+  awesome_dialog: ^3.1.0
 
 dev_dependencies:
   flutter_test:

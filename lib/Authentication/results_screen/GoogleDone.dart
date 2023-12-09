@@ -5,9 +5,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 // ignore: must_be_immutable
 class GoogleDone extends StatelessWidget {
   GoogleSignIn _googleSignIn;
-  FirebaseUser _user;
+  User _user;
 
-  GoogleDone(FirebaseUser user, GoogleSignIn signIn) {
+  GoogleDone(User user, GoogleSignIn signIn) {
     _user = user;
     _googleSignIn = signIn;
 

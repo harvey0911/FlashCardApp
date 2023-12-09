@@ -6,12 +6,12 @@ import '../../Authentication/results_screen/GoogleDone.dart';
 import '../../Authentication/main_screens/RegisterPage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../results_screen/Done.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 bool _wrongEmail = false;
 bool _wrongPassword = false;
 
-FirebaseUser _user;
+User? _user;
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
@@ -22,22 +22,22 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String email;
-  String password;
+  String? email;
+  String? password;
 
   bool _showSpinner = false;
 
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> _handleSignIn() async {
+  Future<User> _handleSignIn() async {
     // hold the instance of the authenticated user
-//    FirebaseUser user;
+//    User user;
     // flag to check whether we're signed in already
     bool isSignedIn = await _googleSignIn.isSignedIn();
     if (isSignedIn) {
       // if so, return the current user
-      _user = await _auth.currentUser();
+      _user = _auth.currentUser;
     } else {
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       _showSpinner = true;
     });
 
-    FirebaseUser user = await _handleSignIn();
+    User user = await _handleSignIn();
 
     setState(() {
       _showSpinner = true;

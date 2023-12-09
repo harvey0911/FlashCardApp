@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:task/results_screen/Done.dart';
-import 'package:task/results_screen/GoogleDone.dart';
-import 'package:task/main_screens/LoginPage.dart';
+import '../../Authentication/results_screen/Done.dart';
+import '../../Authentication/results_screen/GoogleDone.dart';
+import '../../Authentication/main_screens/LoginPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:validators/validators.dart' as validator;
 
 // ignore: must_be_immutable
@@ -32,9 +32,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<FirebaseUser> _handleSignIn() async {
+  Future<User> _handleSignIn() async {
     // hold the instance of the authenticated user
-    FirebaseUser user;
+    User user;
     // flag to check whether we're signed in already
     bool isSignedIn = await _googleSignIn.isSignedIn();
     if (isSignedIn) {
@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void onGoogleSignIn(BuildContext context) async {
-    FirebaseUser user = await _handleSignIn();
+    User user = await _handleSignIn();
     Navigator.push(
         context,
         MaterialPageRoute(
