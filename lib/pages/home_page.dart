@@ -4,6 +4,7 @@ import 'package:flutter_flashcards/configs/constants.dart';
 import 'package:flutter_flashcards/databases/database_manager.dart';
 import 'package:flutter_flashcards/notifiers/flashcards_notifier.dart';
 import 'package:flutter_flashcards/notifiers/review_notifier.dart';
+import 'package:flutter_flashcards/pages/flashcards_page.dart';
 import 'package:flutter_flashcards/pages/review_page.dart';
 import 'package:flutter_flashcards/pages/settings_page.dart';
 import 'package:provider/provider.dart';
@@ -23,17 +24,15 @@ class _HomePageState extends State<HomePage> {
   List<String> _topics = [];
 
   @override
-  initState() {
+  void initState() {
+    super.initState();
     for (var t in words) {
       if (!_topics.contains(t.topic)) {
         _topics.add(t.topic);
       }
       _topics.sort();
     }
-
     _topics.insertAll(0, []);
-
-    super.initState();
   }
 
   @override
@@ -45,58 +44,36 @@ class _HomePageState extends State<HomePage> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(30),
-                bottomRight: Radius.circular(30))),
+                bottomRight: Radius.circular(30)
+            )
+        ),
         toolbarHeight: size.height * 0.15,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    Provider.of<FlashcardsNotifier>(context, listen: false)
-                        .setTopic(topic: 'Settings');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SettingsPage()));
-                  },
-                  child: SizedBox(
-                    width: size.width * kIconPadding,
-                    child: Image.asset('assets/images/Settings.png'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * kIconPadding,
-                )
-              ],
+            // Settings icon
+            _buildIcon(
+                imagePath: 'assets/images/Settings.png',
+                onTap: () => _navigateToSettingsPage(context),
+                size: size
             ),
             const FadeInAnimation(
                 child: Text(
-              'MyFlashcardsApp',
-              textAlign: TextAlign.center,
-            )),
-            Column(
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _loadReviewPage(context);
-                  },
-                  child: SizedBox(
-                    width: size.width * kIconPadding,
-                    child: Image.asset('assets/images/Review.png'),
-                  ),
-                ),
-                SizedBox(
-                  height: size.height * kIconPadding,
+                  'MyFlashcardsApp',
+                  textAlign: TextAlign.center,
                 )
-              ],
+            ),
+            // Review icon
+            _buildIcon(
+                imagePath: 'assets/images/Review.png',
+                onTap: () => _loadReviewPage(context),
+                size: size
             ),
           ],
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.only(left: widthPadding, right: widthPadding),
+        padding: EdgeInsets.symmetric(horizontal: widthPadding),
         child: CustomScrollView(
           slivers: [
             SliverAppBar(
@@ -104,42 +81,58 @@ class _HomePageState extends State<HomePage> {
               expandedHeight: size.height * 0.40,
               flexibleSpace: FlexibleSpaceBar(
                 background: Padding(
-                  padding: EdgeInsets.all(size.width * 0.10),
-                  child: FadeInAnimation(
-                      child: Image.asset('assets/images/MyFlashcards.png')),
+                    padding: EdgeInsets.all(size.width * 0.10),
+                    child: FadeInAnimation(
+                        child: Image.asset('assets/images/MyFlashcards.png')
+                    )
                 ),
               ),
             ),
             SliverGrid(
                 delegate: SliverChildBuilderDelegate(
-                  childCount: _topics.length,
-                  (context, index) => TopicTile(topic: _topics[index]),
+                        (context, index) => TopicTile(topic: _topics[index]),
+                    childCount: _topics.length
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 6,
                   mainAxisSpacing: 6,
-                ))
+                )
+            )
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const FlashcardsPage())
+        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
 
   void _loadReviewPage(BuildContext context) {
-    Provider.of<FlashcardsNotifier>(context, listen: false)
-        .setTopic(topic: 'Review');
-
+    Provider.of<FlashcardsNotifier>(context, listen: false).setTopic(topic: 'Review');
     DatabaseManager().selectWords().then((words) {
-      final reviewNotifier =
-          Provider.of<ReviewNotifier>(context, listen: false);
-      if (words.isEmpty) {
-        reviewNotifier.disableButtons(disable: true);
-      } else {
-        reviewNotifier.disableButtons(disable: false);
-      }
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const ReviewPage()));
+      final reviewNotifier = Provider.of<ReviewNotifier>(context, listen: false);
+      reviewNotifier.disableButtons(disable: words.isEmpty);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const ReviewPage()));
     });
+  }
+
+  void _navigateToSettingsPage(BuildContext context) {
+    Provider.of<FlashcardsNotifier>(context, listen: false).setTopic(topic: 'Settings');
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
+  }
+
+  Widget _buildIcon({required String imagePath, required VoidCallback onTap, required Size size}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: size.width * kIconPadding,
+        child: Image.asset(imagePath),
+      ),
+    );
   }
 }

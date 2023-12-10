@@ -50,7 +50,6 @@ class MyApp extends StatelessWidget {
         HomePage.id: (context) => const HomePage(), // Assuming HomePage has a static 'id' field
         ForgotPassword.id: (context) => ForgotPassword(),
         Done.id: (context) => Done(),
-        // Removed GoogleDone from routes due to parameter requirements
       },
     );
   }
