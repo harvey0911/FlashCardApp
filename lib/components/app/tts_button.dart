@@ -39,7 +39,7 @@ class _TTSButtonState extends State<TTSButton> {
     return Expanded(
         child: IconButton(
             onPressed: () {
-              _runTts(text: widget.word.character);
+              _runTts(text: widget.word.question);
               _isTapped = true;
               setState(() {});
               Future.delayed(const Duration(milliseconds: 500), () {

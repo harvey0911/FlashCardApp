@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_flashcards/components/app/tts_button.dart';
 import 'package:flutter_flashcards/notifiers/flashcards_notifier.dart';
-import 'package:flutter_flashcards/pages/create_flashcard_form.dart';
+//import 'package:flutter_flashcards/pages/create_flashcard_form.dart';
+import '../../models/word.dart';
+import 'create_flashcard_form.dart';
 import 'package:flutter_flashcards/notifiers/settings_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -62,7 +64,7 @@ class CardDisplay extends StatelessWidget {
         if (audioOnly) ...[
           TTSButton(word: word),
         ] else if (!setEnglishFirst) ...[
-          buildTextBox(word.character, context, 3),
+          buildTextBox(word.question, context, 3),
           if (showPinyin) buildTextBox(word.pinyin, context, 1),
           TTSButton(word: word),
         ] else ...[
@@ -101,9 +103,4 @@ class CardDisplay extends StatelessWidget {
   }
 }
 
-class Word {
-  final String character;
-  final String pinyin;
-  final String chapter;
-  Word({required this.character, required this.pinyin, required this.chapter});
-}
+

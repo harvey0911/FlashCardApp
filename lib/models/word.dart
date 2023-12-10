@@ -2,20 +2,20 @@ class Word {
   int? id;
   final String topic;
   final String chapter;
-  final String character;
+  final String question;
   final String pinyin;
 
   Word(
-      {required this.topic,
-      required this.chapter,//subject
-      required this.character,//question
-      required this.pinyin});//answer
+      {required this.topic,//topic
+      required this.chapter,//english
+      required this.question,//character
+      required this.pinyin});//pinyin
 
   Map<String, dynamic> toMap() {
     return {
       'topic': topic,
       'chapter': chapter,
-      'character': character,
+      'character': question,
       'pinyin': pinyin
     };
   }
@@ -24,7 +24,7 @@ class Word {
     return Word(
         topic: map['topic'],
         chapter: map['chapter'],
-        character: map['character'],
+        question: map['character'],
         pinyin: map['pinyin']);
   }
 }

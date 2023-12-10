@@ -55,7 +55,7 @@ class WordTile extends StatelessWidget {
                 children: [
                   notifier.showEnglish ? Text(word.chapter) : const SizedBox(),
                   notifier.showCharacter
-                      ? Text(word.character)
+                      ? Text(word.question)
                       : const SizedBox(),
                   notifier.showPinyin ? Text(word.pinyin) : const SizedBox(),
                 ],
