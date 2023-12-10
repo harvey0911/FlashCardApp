@@ -7,6 +7,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:validators/validators.dart' as validator;
 
+import '../../Users/User.dart';
+import '../../databases/database_manager.dart';
+
 class RegisterPage extends StatefulWidget {
   static const String id = 'register_page'; // Changed to const for best practice
 
@@ -142,13 +145,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       });
                       try {
                         if (validator.isEmail(email ?? '') && validator.isLength(password ?? '', 6)) {
-                          setState(() => _showSpinner = true);
-                          final newUser = await _auth.createUserWithEmailAndPassword(
-                              email: email!, password: password!
-                          );
-                          if (newUser != null) {
-                            Navigator.pushNamed(context, Done.id);
-                          }
+
+                          //setState(() => _showSpinner = true);
+                          //final newUser = await _auth.createUserWithEmailAndPassword(email: email!, password: password!);
+
+                          Userc user = Userc(fullName: name!, email: email!, password: password!, role: Role.student);
+                          await DatabaseManager().insertUser(user);
+
+                          // if (newUser != null) {
+                          //   Navigator.pushNamed(context, Done.id);
+                          // }
+
+                          //we load the Home page for the user
+
+
                         } else {
                           setState(() {
                             _wrongEmail = !validator.isEmail(email ?? '');
@@ -278,3 +288,4 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 }
+

@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'MyFlashcardsApp',
       theme: appTheme,
-      initialRoute: RegisterPage.id,
+      initialRoute: HomePage.id,
       routes: {
         RegisterPage.id: (context) => RegisterPage(),
         LoginPage.id: (context) => LoginPage(),
