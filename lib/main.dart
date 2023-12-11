@@ -14,8 +14,6 @@ import 'Authentication/results_screen/Done.dart';
 import 'Authentication/results_screen/ForgotPassword.dart';
 import 'firebase_options.dart';
 
-
-
 Future<void> main() async {
 
   WidgetsFlutterBinding.ensureInitialized();

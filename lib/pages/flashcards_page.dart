@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_flashcards/components/flashcards_page/progress_bar.dart';
 import 'package:flutter_flashcards/configs/constants.dart';
 import 'package:flutter_flashcards/notifiers/flashcards_notifier.dart';
-import 'package:flutter_flashcards/pages/add_flashcard_page.dart';
 import 'package:flutter_flashcards/utils/methods.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../components/app/custom_appbar.dart';
 import '../components/flashcards_page/card_1.dart';
 import '../components/flashcards_page/card_2.dart';
-import '../components/flashcards_page/add_card.dart';
 
 class FlashcardsPage extends StatefulWidget {
   const FlashcardsPage({Key? key}) : super(key: key);
@@ -22,9 +19,9 @@ class FlashcardsPage extends StatefulWidget {
 class _FlashcardsPageState extends State<FlashcardsPage> {
   @override
   void initState() {
-    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      final flashcardsNotifier = Provider.of<FlashcardsNotifier>(context, listen: false);
+      final flashcardsNotifier =
+      Provider.of<FlashcardsNotifier>(context, listen: false);
       flashcardsNotifier.runSlideCard1();
       flashcardsNotifier.generateAllSelectedWords();
       flashcardsNotifier.generateCurrentWord(context: context);
@@ -34,6 +31,7 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
         }
       });
     });
+    super.initState();
   }
 
   @override
@@ -50,16 +48,8 @@ class _FlashcardsPageState extends State<FlashcardsPage> {
               Align(alignment: Alignment.bottomCenter, child: ProgressBar()),
               Card2(),
               Card1(),
-              AddCard(),
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AddFlashcardPage())
-          ),
-          child: const Icon(Icons.add),
         ),
       ),
     );
