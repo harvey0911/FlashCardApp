@@ -87,4 +87,26 @@ class DatabaseManager {
     final path = join(devicesPath, _database);
     await deleteDatabase(path);
   }
+
+
+
+
+
+  Future<Userc?> authenticateUser(String email, String password) async {
+  final db = await initDatabase();
+  final List<Map<String, dynamic>> maps = await db.query(
+  _usersTable,
+  where: 'email = ? AND password = ?',
+  whereArgs: [email, password],
+  );
+
+  if (maps.isNotEmpty) {
+  return Userc.fromMap(maps.first);
+  }
+  return null;
+  }
+
+
+
+
 }

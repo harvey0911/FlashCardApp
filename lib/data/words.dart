@@ -70,17 +70,5 @@ final List<Word> words = [
   Word(topic: "Shapes", chapter: "Circle", pinyin: "Yuán Xíng", question: "圆形"),
   Word(topic: "Shapes", chapter: "Square", pinyin: "Zhèng Fāng Xíng", question: "正方形"),
 
-  Word(topic: "Sports", chapter: "Tennis", pinyin: "Wǎng Qiú", question: "网球"),
-  Word(topic: "Sports", chapter: "Rugby", pinyin: "Gǎn Lǎn Qiú", question: "橄榄球"),
-  Word(topic: "Sports", chapter: "Golf", pinyin: "Gāo'ěr Fū", question: "高尔夫"),
-
-  Word(topic: "Vehicles", chapter: "Motorbike", pinyin: "Mó Tuō Chē", question: "摩托车"),
-  Word(topic: "Vehicles", chapter: "Train", pinyin: "Huǒ Chē", question: "火车"),
-  Word(topic: "Vehicles", chapter: "Truck", pinyin: "Kǎ Chē", question: "卡车"),
-  Word(topic: "Vehicles", chapter: "Airplane", pinyin: "Fēi Jī", question: "飞机"),
-
-  Word(topic: "Weather", chapter: "Rain", pinyin: "Xià Yǔ", question: "下雨"),
-  Word(topic: "Weather", chapter: "Sun", pinyin: "Tài Yáng", question: "太阳"),
-  Word(topic: "Weather", chapter: "Cloud", pinyin: "Yún", question: "云"),
 
 ];

@@ -9,6 +9,7 @@ import 'package:validators/validators.dart' as validator;
 
 import '../../Users/User.dart';
 import '../../databases/database_manager.dart';
+import '../../pages/home_page.dart';
 
 class RegisterPage extends StatefulWidget {
   static const String id = 'register_page'; // Changed to const for best practice
@@ -150,7 +151,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           //final newUser = await _auth.createUserWithEmailAndPassword(email: email!, password: password!);
 
                           Userc user = Userc(fullName: name!, email: email!, password: password!, role: Role.student);
-                          await DatabaseManager().insertUser(user);
+                           DatabaseManager().insertUser(user);
+
+                          Navigator.pushReplacementNamed(context, HomePage.id);
 
                           // if (newUser != null) {
                           //   Navigator.pushNamed(context, Done.id);
@@ -220,7 +223,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset('assets/images/google.png',
+                              Image.asset('assets/images/Google.png',
                                   fit: BoxFit.contain,
                                   width: 40.0,
                                   height: 40.0),
@@ -248,7 +251,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset('assets/images/facebook.png',
+                              Image.asset('assets/images/Facebook.png',
                                   fit: BoxFit.cover, width: 40.0, height: 40.0),
                               Text(
                                 'Facebook',
